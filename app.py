@@ -39,7 +39,8 @@ def load_overall_analysis():
 
     fig3, ax3 = plt.subplots()
     ax3.plot(temp_df['x_axis'], temp_df['amount'])
-    ax3.tick_params(axis='x', rotation=90)
+    ax3.set_xticks(range(0, len(temp_df), 6))
+    ax3.set_xticklabels(temp_df['x_axis'][::6], rotation=45)
     st.pyplot(fig3)
 
 
@@ -59,7 +60,9 @@ def load_startup_details(startup):
 
     # funding rounds
     st.subheader('Funding Rounds')
-    st.dataframe(s_df[['date', 'round', 'investors', 'amount']].reset_index(drop=True))
+    rounds_df = s_df[['date', 'round', 'investors', 'amount']].reset_index(drop=True)
+    rounds_df['date'] = rounds_df['date'].dt.strftime('%d-%m-%Y')
+    st.dataframe(rounds_df)
 
     # funding over time
     st.subheader('Funding Over Time')
@@ -81,7 +84,8 @@ def load_investor_details(investor):
     st.title(investor)
     inv_df = df[df['investors'].str.contains(investor, regex=False, na=False)]
 
-    last5_df = inv_df.head()[['date', 'startup', 'vertical', 'city', 'round', 'amount']]
+    last5_df = inv_df.head()[['date', 'startup', 'vertical', 'city', 'round', 'amount']].copy()
+    last5_df['date'] = last5_df['date'].dt.strftime('%d-%m-%Y')
     st.subheader('Most Recent Investments')
     st.dataframe(last5_df)
 
@@ -104,7 +108,9 @@ def load_investor_details(investor):
     year_series = inv_df.groupby('year')['amount'].sum()
     st.subheader('YoY Investment')
     fig2, ax2 = plt.subplots()
-    ax2.plot(year_series.index, year_series.values)
+    ax2.plot(year_series.index, year_series.values, marker='o')
+    ax2.set_xticks(year_series.index)
+    ax2.set_xticklabels(year_series.index.astype(int))
     st.pyplot(fig2)
 
 

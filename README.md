@@ -3,7 +3,7 @@
 A case study on Indian startup funding data. The raw CSV is cleaned with pandas
 and explored through an interactive Streamlit dashboard.
 
-**Live app:** _add your Streamlit link here after deploying_
+**Live app:** https://prakharrai10-startup-funding-analysis-app-xcuup8.streamlit.app/
 
 ## Features
 - **Overall Analysis:** total, max and average funding, number of funded startups, and a month-on-month trend (total or count)

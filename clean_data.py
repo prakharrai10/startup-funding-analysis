@@ -43,7 +43,7 @@ def clean(path='startup_funding.csv'):
 
     # tidy text
     df['investors'] = df['investors'].str.replace('"', '', regex=False).str.strip()
-    df['city'] = df['city'].str.strip()
+    df['city'] = df['city'].str.strip().replace({'Bengaluru': 'Bangalore'})
     return df
 
 
